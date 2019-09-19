@@ -1,11 +1,11 @@
 // https://node-postgres.com/guides/async-express
 const db = require('../db')
-const { User } = require("./User")
+const { GetProduct, UpdateProduct } = require("./Product")
 
 const resolvers = {
     Query: {
-        getUser: async (parent, { id }) => {
-            const sql = 'SELECT * FROM users WHERE id = $1';
+        getProduct: async (parent, { id }) => {
+            const sql = 'SELECT * FROM products WHERE id = $1';
             const query = {
                 text: sql,
                 values: [id],
@@ -14,50 +14,55 @@ const resolvers = {
             try {
                 const { rows } = await db.query(query);
                 const payload = rows[0]
+                console.log("[GET] Product\n")
                 console.log(payload)
-                return new User(id, payload);
+                return new GetProduct(id, payload);
             } catch (e) {
                 console.log(e);
             }
         },
     },
     Mutation: {
-        createUser: async (parent, { input }) => {
+        createProduct: async (parent, { input }) => {
             // Create a random id for our "database".
             const id = require('crypto').randomBytes(10).toString('hex');
-            const sql = "INSERT INTO users(id, first_name, last_name, date_of_birth) VALUES($1, $2, $3, $4)";
+            const sql = "INSERT INTO products(id, price_in_cents, title, description, discount.pct, discount.value_in_cents) VALUES($1, $2, $3, $4, $5, $6)";
 
-            const { first_name, last_name, date_of_birth, } = input;
+            const { price_in_cents, title, description, discount } = input;
+            const { pct, value_in_cents } = discount;
             const query = {
                 text: sql,
-                values: [id, first_name, last_name, date_of_birth],
+                values: [id, price_in_cents, title, description, pct, value_in_cents],
             };
 
             try {
                 const { rowCount } = await db.query(query);
-                return `${rowCount} user with ${id} was created.`;
+                return `Create ${rowCount} product with id(${id}).`;
             } catch (e) {
                 console.log(e);
             }
         },
-        updateUser: async (parent, { id, input }) => {
-            const sql = "UPDATE users SET first_name = $1, last_name = $2, date_of_birth = $3 WHERE id = $4"
-            const { first_name, last_name, date_of_birth } = input;
+        updateProduct: async (parent, { id, input }) => {
+            const sql = "UPDATE products SET price_in_cents = $1, title = $2, description = $3, discount.pct = $4, discount.value_in_cents = $5 WHERE id = $6"
+
+            const { price_in_cents, title, description, discount } = input;
+            const { pct, value_in_cents } = discount;
+
             const query = {
                 text: sql,
-                values: [first_name, last_name, date_of_birth, id],
+                values: [price_in_cents, title, description, pct, value_in_cents, id],
             };
 
             try {
                 const { rowCount } = await db.query(query);
-                console.log(`update ${rowCount} user with id(${id}).`);
-                return new User(id, input);
+                console.log(`update ${rowCount} product with id(${id}).`);
+                return new UpdateProduct(id, input);
             } catch (e) {
                 console.log(e);
             }
         },
-        deleteUser: async (parent, { id }) => {
-            const sql = 'DELETE FROM users WHERE id = $1';
+        deleteProduct: async (parent, { id }) => {
+            const sql = 'DELETE FROM products WHERE id = $1';
             const query = {
                 text: sql,
                 values: [id],
@@ -65,7 +70,11 @@ const resolvers = {
 
             try {
                 const { rowCount } = await db.query(query);
-                return `${rowCount} user with ${id} was removed.`;
+                if (rowCount === 1) {
+                    return `Remove ${rowCount} product with id(${id}).`;
+                } else {
+                    return `There is no product with id(${id}) in database.`
+                }
             } catch (e) {
                 console.log(e);
             }

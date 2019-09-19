@@ -1,6 +1,6 @@
-# User Graphql Example with Postgresql Database
+# Product Graphql Example with Postgresql Database
 
-Make README.md file to separate CRUD query examples.
+Make README.md file to separate CRUD query examples. You should fill every fields for database to work without any problem.
 
 ## CRUD
 
@@ -8,10 +8,14 @@ Make README.md file to separate CRUD query examples.
 
 ```js
 mutation {
-  createUser(input: {
-    first_name: "first"
-        last_name: "last"
-        date_of_birth: "2019-01-01"
+  createProduct(input:{
+    price_in_cents: 500
+    title: "a product"
+    description: "cheap"
+    discount: {
+      pct: 0.05
+      value_in_cents: 25
+    }
   })
 }
 ```
@@ -20,10 +24,14 @@ mutation {
 
 ```js
 {
-  getUser(id: "f3930e2bb16ce09838eb") {
-    first_name
-    last_name
-    date_of_birth
+  getProduct(id: "07eb68e8d1df28934b73") {
+    title
+    price_in_cents
+    description
+    discount {
+      pct
+      value_in_cents
+    }
   }
 }
 ```
@@ -32,14 +40,16 @@ mutation {
 
 ```js
 mutation {
-  updateUser(id: "0b3e90418413a496adf7", input: {
-    first_name: "first"
-        last_name: "last"
-        date_of_birth: "2019-01-01"
+  updateProduct(id: "c3abd499f372b1712f9f", input: {
+    price_in_cents: 1000
+    title: "another product"
+    description: "expensive"
+    discount: {
+      pct: 0.05
+      value_in_cents: 25
+    }
   }) {
-    first_name
-    last_name
-    date_of_birth
+    title
   }
 }
 ```
@@ -48,6 +58,6 @@ mutation {
 
 ```js
 mutation {
-  deleteUser(id: "6a104d6eabc764ff0aa3")
+ deleteProduct(id: "07eb68e8d1df28934b73")
 }
 ```

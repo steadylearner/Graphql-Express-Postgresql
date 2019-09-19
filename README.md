@@ -1,4 +1,4 @@
-# 1. C descount.value_in_cents = price_in_cents * descount.pct
+# 
 
 https://github.com/hashlab/hiring/blob/master/challenges/pt-br/back-challenge.md
 
@@ -15,6 +15,18 @@ Product
     }
 }
 
-https://node-postgres.com/features/connecting
-https://medium.com/dailyjs/postgresql-with-nodejs-d0dcedba5884
-https://github.com/apollographql/apollo-server/tree/master/packages/apollo-server-express
+User
+
+{
+    id: string
+    first_name: string
+    last_name: string
+    date_of_birth: Date
+}
+
+## READ MORE
+
+1. https://node-postgres.com
+
+2. https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8/
+

@@ -1,31 +1,43 @@
 const { gql } = require('apollo-server-express');
 
-const user = `
-  input UserInput {
-    first_name: String
-    last_name: String
-    date_of_birth: String
+const product = `
+  input DiscountInput {
+    pct: Float
+    value_in_cents: Int
   }
 
-  type User {
+  input ProductInput {
+    price_in_cents: Int
+    title: String
+    description: String
+    discount: DiscountInput
+  }
+
+  type Discount {
+    pct: Float
+    value_in_cents: Int
+  }
+
+  type Product {
     id: ID!
-    first_name: String
-    last_name: String
-    date_of_birth: String
+    price_in_cents: Int
+    title: String
+    description: String
+    discount: Discount
   }
 
   type Query {
-    getUser(id: ID!): User
+    getProduct(id: ID!): Product
   }
 
   type Mutation {
-    createUser(input: UserInput): String
-    updateUser(id: ID!, input: UserInput): User
-    deleteUser(id: ID!): String
+    createProduct(input: ProductInput): String
+    updateProduct(id: ID!, input: ProductInput): Product
+    deleteProduct(id: ID!): String
   }
 `
 
-const typeDefs = gql(user);
+const typeDefs = gql(product);
 
 module.exports = {
   typeDefs,

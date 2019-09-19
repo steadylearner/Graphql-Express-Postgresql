@@ -14,6 +14,7 @@ const resolvers = {
             try {
                 const { rows } = await db.query(query);
                 const payload = rows[0]
+                console.log("[GET] User\n")
                 console.log(payload)
                 return new User(id, payload);
             } catch (e) {
@@ -35,7 +36,7 @@ const resolvers = {
 
             try {
                 const { rowCount } = await db.query(query);
-                return `${rowCount} user with ${id} was created.`;
+                return `Create ${rowCount} user with id(${id}).`;
             } catch (e) {
                 console.log(e);
             }
@@ -65,7 +66,11 @@ const resolvers = {
 
             try {
                 const { rowCount } = await db.query(query);
-                return `${rowCount} user with ${id} was removed.`;
+                if (rowCount === 1) {
+                    return `Remove ${rowCount} user with id(${id}).`;
+                } else {
+                    return `There is no user with id(${id}) in database.`
+                }
             } catch (e) {
                 console.log(e);
             }

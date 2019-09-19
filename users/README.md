@@ -1,6 +1,6 @@
 # User Graphql Example with Postgresql Database
 
-Make README.md file to separate CRUD query examples.
+Make README.md file to separate CRUD query examples. You should fill every fields for database to work without any problem.
 
 ## CRUD
 
@@ -34,8 +34,8 @@ mutation {
 mutation {
   updateUser(id: "0b3e90418413a496adf7", input: {
     first_name: "first"
-        last_name: "last"
-        date_of_birth: "2019-01-01"
+    last_name: "last"
+    date_of_birth: "2019-01-01"
   }) {
     first_name
     last_name
