@@ -1,6 +1,6 @@
 # User Graphql Example with Postgresql Database
 
-Make README.md file to separate CRUD examples.
+Make README.md file to separate CRUD query examples.
 
 ## CRUD
 

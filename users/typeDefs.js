@@ -1,3 +1,5 @@
+const { gql } = require('apollo-server-express');
+
 const user = `
   input UserInput {
     first_name: String
@@ -23,6 +25,8 @@ const user = `
   }
 `
 
+const typeDefs = gql(user);
+
 module.exports = {
-  user,
+  typeDefs,
 }
