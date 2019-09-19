@@ -3,8 +3,8 @@ const { ApolloServer } = require('apollo-server-express');
 
 const startServer = (typeDefs, resolvers) => {
     const server = new ApolloServer({ typeDefs, resolvers });
-    const port = 4000;
-    
+    const port = 5000
+
     const app = express();
     server.applyMiddleware({ app });
 
