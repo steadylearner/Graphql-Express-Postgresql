@@ -26,16 +26,17 @@ const { isBirthday, isBlackFriday } = require("../lib")
 router.get("/", function (req, res) {
     console.log("Get request to /product");
     console.log(req.headers);
-    const payload = req.headers["x-user-id"];
 
-    if (payload) { // optional header
-        // return with discount
+    const withTargetHeadear = req.headers.hasOwnProperty("x-user-id");
+
+    if (withTargetHeader) {
+        const payload = req.headers["x-user-id"];
+        console.log(payload)
+        // res.json({ userId, productId });
     } else {
-        // return without discount
-    }  
-
-    console.log(payload);
-    // res.json({ userId, productId });
+        // res.json({ userId, productId });
+    }
+    
 })
 
 // app.post("/product", (req, res) => {
