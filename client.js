@@ -1,8 +1,11 @@
 // https://github.com/prisma/graphql-request
 
-const { request } = require('graphql-request')
+const { request } = require("graphql-request");
+const { isBirthday, isBlackFriday } = require("./lib")
 
-// use product isntead later
+// When everything passes, 
+// make a route that accept product id and move code here to it. 
+// separate users and products folder in docker
 async function graphqlRequest(userId = "") {
   try {
     const payload = `id: "${userId}"`
@@ -12,17 +15,24 @@ async function graphqlRequest(userId = "") {
       }
     }`
 
-    const { getUser } = await request('http://localhost:4000/graphql', userQuery);
-    const { date_of_birth } = getUser;
-    const toNumber = new Number(date_of_birth);
-    const date = new Date(toNumber);
-    // const toStr = new String(date);
-    // console.log(toStr);
-    console.log(date)
-
     // const { getProduct } = await request('http://localhost:5000/graphql', product)
+    const { getUser } = await request('http://localhost:4000/graphql', userQuery); // if this connection fails return normal product
+    let { date_of_birth } = getUser;
+
+    // if (isBlackFriday) {
+    //    function for 10% discount for product and return json   
+    // } else {
+    //   if (isBirthday) {
+    //      function for 5% discount and return json
+    //   } else {
+    //      return json from product
+    //   }
+    // }
+
+    console.log(isBirthday(date_of_birth));
+
     // use products instead and return JSON value
-  } catch(e) {
+  } catch (e) {
     console.log(e)
   }
 }
