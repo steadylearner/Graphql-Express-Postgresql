@@ -14,7 +14,7 @@ const resolvers = {
             try {
                 const { rows } = await db.query(query);
                 const payload = rows[0]
-                console.log("[GET] Product\n")
+                console.log("\n[GET] Product\n")
                 console.log(payload)
                 return new GetProduct(id, payload);
             } catch (e) {

@@ -3,33 +3,54 @@
 const { request } = require("graphql-request");
 const { isBirthday, isBlackFriday } = require("./lib")
 
-// When everything passes, 
-// make a route that accept product id and move code here to it. 
-// separate users and products folder in docker
-async function graphqlRequest(userId = "") {
+async function graphqlRequest(userId = "", productId = "") {
   try {
-    const payload = `id: "${userId}"`
+    const productPayload = `id: "${productId}"`
+    const productQuery = `{
+      getProduct(${productPayload}) {
+        title
+        price_in_cents
+        description
+        discount {
+          pct
+          value_in_cents
+        }
+      }
+    }`
+
+    const { getProduct } = await request('http://localhost:5000/graphql', productQuery)
+    const { price_in_cents, discount } = getProduct;
+    // console.log(discount);
+
+    const userPayload = `id: "${userId}"`
     const userQuery = `{
-      getUser(${payload}) {
+      getUser(${userPayload}) {
         date_of_birth
       }
     }`
 
-    // const { getProduct } = await request('http://localhost:5000/graphql', product)
     const { getUser } = await request('http://localhost:4000/graphql', userQuery); // if this connection fails return normal product
     let { date_of_birth } = getUser;
 
-    // if (isBlackFriday) {
-    //    function for 10% discount for product and return json   
-    // } else {
-    //   if (isBirthday) {
-    //      function for 5% discount and return json
-    //   } else {
-    //      return json from product
-    //   }
-    // }
+    if (isBlackFriday()) {
+      console.log(payload)
+      const payload = {
+        "pct": "0.1",
+        "value_in_cents": 0.1 * price_in_cents
+      }
+    } else {
+      if (isBirthday(date_of_birth)) {
+        const payload = {
+          "pct": "0.05",
+          "value_in_cents": 0.05 * price_in_cents
+        }
+        console.log(payload)
+      } else {
+        console.log(discount); // return default value
+      }
+    }
 
-    console.log(isBirthday(date_of_birth));
+    // console.log(isBirthday(date_of_birth));
 
     // use products instead and return JSON value
   } catch (e) {
@@ -37,4 +58,9 @@ async function graphqlRequest(userId = "") {
   }
 }
 
-graphqlRequest("87d80a98d811867885c1");
+// graphqlRequest("d0418e582890f3d8dacb", "c7a49a7e7a150d9309e0");
+graphqlRequest("87d80a98d811867885c1", "c7a49a7e7a150d9309e0");
+
+// When everything passes,
+// make a route that accept product id and move code here to it.
+// separate users and products folder in docker

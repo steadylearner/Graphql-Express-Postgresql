@@ -14,7 +14,7 @@ const resolvers = {
             try {
                 const { rows } = await db.query(query);
                 const payload = rows[0]
-                console.log("[GET] User\n")
+                console.log("\n[GET] User\n")
                 console.log(payload)
                 return new User(id, payload);
             } catch (e) {
