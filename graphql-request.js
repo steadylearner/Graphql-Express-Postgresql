@@ -3,7 +3,9 @@
 const { request } = require("graphql-request");
 const { isBirthday, isBlackFriday } = require("./lib")
 
+// 1. Graphql with graphql-request
 async function graphqlRequest(userId = "", productId = "") {
+  const graphqlServer = "http://localhost:4000/graphql";
   try {
     const productPayload = `id: "${productId}"`
     const productQuery = `{
@@ -18,7 +20,7 @@ async function graphqlRequest(userId = "", productId = "") {
       }
     }`
 
-    const { getProduct } = await request('http://localhost:5000/graphql', productQuery)
+    const { getProduct } = await request(graphqlServer, productQuery)
     const { price_in_cents, discount } = getProduct;
     // console.log(discount);
 
@@ -29,7 +31,7 @@ async function graphqlRequest(userId = "", productId = "") {
       }
     }`
 
-    const { getUser } = await request('http://localhost:4000/graphql', userQuery); // if this connection fails return normal product
+    const { getUser } = await request(graphqlServer, userQuery);
     let { date_of_birth } = getUser;
 
     if (isBlackFriday()) {
@@ -67,3 +69,5 @@ graphqlRequest("d0418e582890f3d8dacb", "c7a49a7e7a150d9309e0");
 // When everything passes,
 // make a route that accept product id and move code here to it.
 // separate users and products folder in docker
+
+
