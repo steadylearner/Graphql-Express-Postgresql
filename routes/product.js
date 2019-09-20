@@ -12,10 +12,30 @@ const { isBirthday, isBlackFriday } = require("../lib")
 // define the home page route
 
 // echo JSON route for the request with userId and productId
-router.post('/', function (req, res) {
-    const { userId, productId } = req.body;
+// router.post('/', function (req, res) {
+//     const { userId, productId } = req.body;
 
-    res.json({ userId, productId });
+//     res.json({ userId, productId });
+// })
+
+// router.get("/:userId/:productId", function (req, res) {
+//    const { userId, productId } = req.params;
+//    res.json({ userId, productId });
+// })
+
+router.get("/", function (req, res) {
+    console.log("Get request to /product");
+    console.log(req.headers);
+    const payload = req.headers["x-user-id"];
+
+    if (payload) { // optional header
+        // return with discount
+    } else {
+        // return without discount
+    }  
+
+    console.log(payload);
+    // res.json({ userId, productId });
 })
 
 // app.post("/product", (req, res) => {
