@@ -33,20 +33,23 @@ async function graphqlRequest(userId = "", productId = "") {
     let { date_of_birth } = getUser;
 
     if (isBlackFriday()) {
-      console.log(payload)
-      const payload = {
+      const discount = {
         "pct": "0.1",
         "value_in_cents": 0.1 * price_in_cents
       }
+      const discount_in_json = JSON.stringify(discount);
+      console.log(discount_in_json);
     } else {
       if (isBirthday(date_of_birth)) {
-        const payload = {
+        const discount = {
           "pct": "0.05",
           "value_in_cents": 0.05 * price_in_cents
-        }
-        console.log(payload)
+        };
+        const discount_in_json = JSON.stringify(discount); 
+        console.log(discount_in_json); // return json
       } else {
-        console.log(discount); // return default value
+        const discount_in_json = JSON.stringify(discount);
+        console.log(discount_in_json);
       }
     }
 
@@ -58,8 +61,8 @@ async function graphqlRequest(userId = "", productId = "") {
   }
 }
 
-// graphqlRequest("d0418e582890f3d8dacb", "c7a49a7e7a150d9309e0");
-graphqlRequest("87d80a98d811867885c1", "c7a49a7e7a150d9309e0");
+graphqlRequest("d0418e582890f3d8dacb", "c7a49a7e7a150d9309e0");
+// graphqlRequest("87d80a98d811867885c1", "c7a49a7e7a150d9309e0");
 
 // When everything passes,
 // make a route that accept product id and move code here to it.

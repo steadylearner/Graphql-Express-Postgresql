@@ -46,7 +46,7 @@ mutation {
     description: "expensive"
     discount: {
       pct: 0.05
-      value_in_cents: 25
+      value_in_cents: 50
     }
   }) {
     title
