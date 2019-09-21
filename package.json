@@ -1,5 +1,5 @@
 {
-  "name": "graphql",
+  "name": "graphql-grpc",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -17,5 +17,13 @@
     "moment": "^2.24.0",
     "pg": "^7.12.1",
     "ramda": "^0.26.1"
+  },
+  "devDependencies": {
+    "supertest": "^4.0.2",
+    "tape": "^4.11.0"
+  },
+  "scripts": {
+    "test-tape": "node tests/index.js",
+    "graphql": "cd graphql && node index.js"
   }
 }

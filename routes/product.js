@@ -4,39 +4,19 @@ const router = express.Router()
 const { request } = require("graphql-request");
 const { isBirthday, isBlackFriday } = require("../lib")
 
-// middleware that is specific to this router
-// router.use(function timeLog(req, res, next) {
-//     console.log('Time: ', Date.now())
-//     next()
-// })
-// define the home page route
-
-// echo JSON route for the request with userId and productId
-// router.post('/', function (req, res) {
-//     const { userId, productId } = req.body;
-
-//     res.json({ userId, productId });
-// })
-
-// router.get("/:userId/:productId", function (req, res) {
-//    const { userId, productId } = req.params;
-//    res.json({ userId, productId });
-// })
-
-router.get("/", function (req, res) {
+router.get("/", async (req, res) => {
     console.log("Get request to /product");
     console.log(req.headers);
 
-    const withTargetHeadear = req.headers.hasOwnProperty("x-user-id");
+    const withTargetHeader = req.headers.hasOwnProperty("x-user-id");
 
     if (withTargetHeader) {
-        const payload = req.headers["x-user-id"];
-        console.log(payload)
-        // res.json({ userId, productId });
+        const userId = req.headers["x-user-id"];
+        console.log(userId)
+        res.json({ userId });
     } else {
-        // res.json({ userId, productId });
+        res.send("There is no X-USER-ID header in this request.")
     }
-    
 })
 
 // app.post("/product", (req, res) => {
@@ -111,3 +91,21 @@ module.exports = router
 
 // // Se o serviço de desconto(1) cair, o serviço de lista(2) tem que continuar funcionando e retornando a lista normalmente, só não vai aplicar os descontos.
 
+// middleware that is specific to this router
+// router.use(function timeLog(req, res, next) {
+//     console.log('Time: ', Date.now())
+//     next()
+// })
+// define the home page route
+
+// echo JSON route for the request with userId and productId
+// router.post('/', function (req, res) {
+//     const { userId, productId } = req.body;
+
+//     res.json({ userId, productId });
+// })
+
+// router.get("/:userId/:productId", function (req, res) {
+//    const { userId, productId } = req.params;
+//    res.json({ userId, productId });
+// })

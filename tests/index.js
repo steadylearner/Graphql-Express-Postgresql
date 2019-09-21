@@ -1,38 +1,60 @@
 // https://github.com/steadylearner/JavaScript-Full-Stack/blob/master/Express/src/test/index.js
+// https://www.google.com/search?client=firefox-b-d&q=jest+with+supertest+example
 
-// test/index.js
+// If files becomes larget, consider using jest instead
 
-// const test = require("tape"); // could be jest instead
-// const request = require("supertest");
+const test = require("tape");
+const request = require("supertest");
 
-// const app = require("app"); // It works with "cross-env" and package.json
-// const assert = require('assert')
+const app = require("../app");
+const assert = require('assert')
 
-// test("POST /product with JSON with userId and productId", done => {
-//   request(app)
-//     .post('/product')
-//     .send({
-//       userId: "whatever",
-//       productId: "whatever",
-//     })
-//     .set('Content-Type', 'application/json')
-//     .set('Accept', 'application/json')
-//     .expect(200)
-//     .then(response => {
-//       console.log("Discount Percent: ", response.body.pct);
-//       cosnole.log("Value in Cents: ", response.body.value_in_cents)
-//       const msg = "Should return 200 OK";
+const chalk = require("chalk");
 
-//       try {
-//         assert.equal(response.body.pct, "0.1");
-//         assert.equal(response.body.err, null);
-//         // assert.equal(response.body.token, ""); // Vou usar outro se db foi necessário
-//       } catch(e) {
-//         console.log(e);
-//         done.fail(msg);
-//       }
+// Functional Test(End to End) here because what we want to verify is request and response only
 
-//       done.pass(msg);
-//       done.end();
-//     })
-// });
+test("GET /product with X-USER-ID header", done => {
+    request(app)
+        .get('/product')
+        .set("X-USER-ID", "test")
+        .expect(200)
+        .then(response => {
+            // console.log(response.body);
+            const blue = chalk.blue
+            const msg = blue("Should return 200 OK with 'test'");
+
+            try {
+                assert.equal(response.body.userId, "test");
+            } catch (e) {
+                console.log(e);
+                done.fail(msg);
+            }
+
+            done.pass(msg);
+            done.end();
+        })
+});
+
+test("GET /product without X-USER-ID header", done => {
+    request(app)
+        .get('/product')
+        .expect(200)
+        .then(response => {
+            // console.log(response.text);
+            const blue = chalk.blue
+            const msg = blue("Should return 200 OK with 'There is no X-USER-ID header in this request.'");
+
+            try {
+                assert.equal(response.text, "There is no X-USER-ID header in this request.");
+            } catch (e) {
+                console.log(e);
+                done.fail(msg);
+            }
+
+            done.pass(msg);
+            done.end();
+        })
+});
+
+
+
