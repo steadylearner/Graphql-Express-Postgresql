@@ -19,10 +19,13 @@
     "ramda": "^0.26.1"
   },
   "devDependencies": {
+    "jest": "^24.9.0",
     "supertest": "^4.0.2",
     "tape": "^4.11.0"
   },
   "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
     "test-tape": "node tests/index.js",
     "graphql": "cd graphql && node index.js"
   }

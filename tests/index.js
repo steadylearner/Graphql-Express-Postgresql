@@ -4,17 +4,20 @@
 // If files becomes larget, consider using jest instead
 
 const test = require("tape");
-const request = require("supertest");
+const supertest = require("supertest");
 
-const app = require("../app");
+const server = require("../server");
+const request = supertest(server);
+
 const assert = require('assert')
 
 const chalk = require("chalk");
 
 // Functional Test(End to End) here because what we want to verify is request and response only
+// This is faster than jest and you don't need async and await
 
 test("GET /product with X-USER-ID header", done => {
-    request(app)
+    request
         .get('/product')
         .set("X-USER-ID", "test")
         .expect(200)
@@ -36,7 +39,7 @@ test("GET /product with X-USER-ID header", done => {
 });
 
 test("GET /product without X-USER-ID header", done => {
-    request(app)
+    request
         .get('/product')
         .expect(200)
         .then(response => {

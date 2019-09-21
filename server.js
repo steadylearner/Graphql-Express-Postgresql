@@ -19,10 +19,4 @@ app.use(bodyParser.json());
 // https://expressjs.com/en/guide/routing.html
 app.use("/product", product)
 
-app.listen(port, () => {
-  const blue = chalk.blue
-  const target = blue(`http://localhost:${port}`)
-  console.log(`🚀 Server ready at ${target}`)
-})
-
 module.exports = app;
