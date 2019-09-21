@@ -3,7 +3,6 @@ const { gql } = require('apollo-server-express');
 let product = `
   input DiscountInput {
     pct: Float
-    value_in_cents: Int
   }
 
   input ProductInput {
@@ -28,12 +27,14 @@ let product = `
 
   type Query {
     getProduct(id: ID!): Product
+    getProducts: [Product]
   }
 
   type Mutation {
     createProduct(input: ProductInput): String
     updateProduct(id: ID!, input: ProductInput): Product
     deleteProduct(id: ID!): String
+    deleteProducts: String
   }
 `
 

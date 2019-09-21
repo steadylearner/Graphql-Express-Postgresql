@@ -4,7 +4,7 @@ const User = require("../classes/User")
 
 const userResolvers = {
     Query: {
-        getUser: async (parent, { id }) => {
+        getUser: async (_parent, { id }) => {
             const sql = 'SELECT * FROM users WHERE id = $1';
             const query = {
                 text: sql,
@@ -13,22 +13,37 @@ const userResolvers = {
 
             try {
                 const { rows } = await db.query(query);
-                const payload = rows[0]
-                console.log("\n[GET] User\n")
-                console.log(payload)
+                const payload = rows[0];
+                console.log("\n[GET] User\n");
+                console.log(payload);
                 return new User(id, payload);
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        getUsers: async () => {
+            const sql = 'SELECT * FROM users';
+            const query = {
+                text: sql,
+            };
+
+            try {
+                const { rows } = await db.query(query);
+                console.log(rows);
+                console.log("\n[GET] Users\n");
+                return rows;
             } catch (e) {
                 console.log(e);
             }
         },
     },
     Mutation: {
-        createUser: async (parent, { input }) => {
+        createUser: async (_parent, { input }) => {
             // Create a random id for our "database".
-            const id = require('crypto').randomBytes(10).toString('hex');
+            // const id = require('crypto').randomBytes(10).toString('hex');
             const sql = "INSERT INTO users(id, first_name, last_name, date_of_birth) VALUES($1, $2, $3, $4)";
 
-            const { first_name, last_name, date_of_birth, } = input;
+            const { id, first_name, last_name, date_of_birth, } = input;
             const query = {
                 text: sql,
                 values: [id, first_name, last_name, date_of_birth],
@@ -39,9 +54,10 @@ const userResolvers = {
                 return `Create ${rowCount} user with id(${id}).`;
             } catch (e) {
                 console.log(e);
+                return e; // or should differenciate error, there is already user with this id etc
             }
         },
-        updateUser: async (parent, { id, input }) => {
+        updateUser: async (_parent, { id, input }) => {
             const sql = "UPDATE users SET first_name = $1, last_name = $2, date_of_birth = $3 WHERE id = $4"
             const { first_name, last_name, date_of_birth } = input;
             const query = {
@@ -55,9 +71,10 @@ const userResolvers = {
                 return new User(id, input);
             } catch (e) {
                 console.log(e);
+                return e;
             }
         },
-        deleteUser: async (parent, { id }) => {
+        deleteUser: async (_parent, { id }) => {
             const sql = 'DELETE FROM users WHERE id = $1';
             const query = {
                 text: sql,
@@ -73,6 +90,21 @@ const userResolvers = {
                 }
             } catch (e) {
                 console.log(e);
+                return e;
+            }
+        },
+        deleteUsers: async () => {
+            const sql = 'DELETE FROM users';
+            const query = {
+                text: sql,
+            };
+
+            try {
+                const { rowCount } = await db.query(query);
+                return `Remove ${rowCount} users.`;
+            } catch (e) {
+                console.log(e);
+                return e;
             }
         },
     },

@@ -23,7 +23,12 @@ class UpdateProduct {
         this.price_in_cents = price_in_cents;
         this.title = title;
         this.description = description;
-        this.discount = discount
+        const { pct } = discount
+        const value_in_cents = price_in_cents * pct;
+        this.discount = {
+            pct,
+            value_in_cents,
+        }
     }
 }
 

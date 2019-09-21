@@ -7,7 +7,7 @@ const chalk = require("chalk");
 const app = express();
 const port = 3000;
 
-const { product } = require("./routes");
+const { product, products } = require("./routes");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -18,5 +18,6 @@ app.use(bodyParser.json());
 
 // https://expressjs.com/en/guide/routing.html
 app.use("/product", product)
+app.use("/products", products)
 
 module.exports = app;

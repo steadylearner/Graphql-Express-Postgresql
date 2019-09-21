@@ -15,8 +15,7 @@ mutation {
     title: "a product"
     description: "cheap"
     discount: {
-      pct: 0.05
-      value_in_cents: 25
+      pct: 0.01
     }
   })
 }
@@ -38,6 +37,20 @@ mutation {
 }
 ```
 
+```
+{
+  getProducts {
+    id
+    price_in_cents
+    description
+    discount {
+      pct
+      value_in_cents
+    }
+  }
+}
+```
+
 3. U
 
 ```js
@@ -48,7 +61,6 @@ mutation {
     description: "expensive"
     discount: {
       pct: 0.05
-      value_in_cents: 50
     }
   }) {
     title
@@ -60,7 +72,13 @@ mutation {
 
 ```js
 mutation {
- deleteProduct(id: "07eb68e8d1df28934b73")
+  deleteProduct(id: "07eb68e8d1df28934b73")
+}
+```
+
+```Js
+mutation {
+  deleteProducts
 }
 ```
 
@@ -71,9 +89,10 @@ mutation {
 ```js
 mutation {
   createUser(input: {
+    id: "steadylearner"
     first_name: "first"
-        last_name: "last"
-        date_of_birth: "2019-01-01"
+    last_name: "last"
+    date_of_birth: "2019-01-01"
   })
 }
 ```
@@ -111,5 +130,11 @@ mutation {
 ```js
 mutation {
   deleteUser(id: "6a104d6eabc764ff0aa3")
+}
+```
+
+```js
+mutation {
+  deleteUser
 }
 ```

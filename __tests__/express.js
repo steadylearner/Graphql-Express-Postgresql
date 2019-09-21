@@ -1,8 +1,12 @@
-const server = require('../server')
-const supertest = require('supertest')
-const request = supertest(server)
+// https://zellwk.com/blog/endpoint-testing/
+// https://jestjs.io/docs/en/asynchronous.html
+// Jest will wait until the done callback is called before finishing the test.
 
-describe("Test express with Jest and supertest", () => {
+const app = require('../server')
+const supertest = require('supertest')
+const request = supertest(app)
+
+describe("Test express with jest and supertest", () => {
     test("GET /product with X-USER-ID header", async done => {
         const response = await request
             .get('/product')
@@ -14,7 +18,7 @@ describe("Test express with Jest and supertest", () => {
         done();
     });
 
-    test("GET /productout with X-USER-ID header", async done => {
+    test("GET /product without X-USER-ID header", async done => {
         const response = await request
             .get('/product')
 

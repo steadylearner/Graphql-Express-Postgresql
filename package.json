@@ -27,6 +27,6 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test-tape": "node tests/index.js",
-    "graphql": "cd graphql && node index.js"
+    "gql": "cd graphql && node index.js"
   }
 }
