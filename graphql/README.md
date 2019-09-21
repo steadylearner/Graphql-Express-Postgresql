@@ -109,6 +109,14 @@ mutation {
 }
 ```
 
+```js
+{
+  getUsers {
+    id
+  }
+}
+```
+
 3. U
 
 ```js
@@ -135,6 +143,6 @@ mutation {
 
 ```js
 mutation {
-  deleteUser
+  deleteUsers
 }
 ```

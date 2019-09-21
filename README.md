@@ -10,8 +10,6 @@ https://github.com/hashlab/hiring/blob/master/challenges/pt-br/back-challenge.md
 
 ## What left
 
-1. Route for /products with express and return JSON while you refer to graphql-request.js and axios.js
+1. Should learn docker to separate the project or make grpc equivalent to graphql
 
-2. Write more tests
-
-3. Should separate the project and upload 1. express with /products, 2. grapqhl to docker
+2. Should separate the project and upload 1. express with /products, 2. grapqhl to docker

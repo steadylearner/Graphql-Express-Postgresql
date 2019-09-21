@@ -35,22 +35,28 @@ const moment = require("moment");
 const random = require('crypto').randomBytes(10).toString('hex');
 
 const today = moment(new Date()).format("YYYY-MM-DD");
+// const graphqlServer = "http://localhost:4000/graphql";
+
+// const userMutation = `mutation {
+//   createUser(input: {
+//       id: "${random}"
+//       first_name: "${random}"
+//       last_name: "${random}"
+//       date_of_birth: "${today}"
+//     })
+//   }
+// `
+
+// axios
+//   .post(graphqlServer, {
+//     "query": userMutation,
+//   }).then(response => console.log(response)).catch()
+
 const graphqlServer = "http://localhost:4000/graphql";
 
-const userMutation = `mutation {
-  createUser(input: {
-      id: "${random}"
-      first_name: "${random}"
-      last_name: "${random}"
-      date_of_birth: "${today}"
-    })
-  }
-`
-
-axios
-  .post(graphqlServer, {
-    "query": userMutation,
-  }).then(response => console.log(response)).catch()
+axios.post(graphqlServer, {"query":"{\n  getUsers {\n    id\n  }\n}"})
+  .then(response => console.log(response))
+  .catch(e => console.log(e));
 
 
 // axios.get("http://localhost:3000/product", { headers: { "X-USER-ID": "test" } })
