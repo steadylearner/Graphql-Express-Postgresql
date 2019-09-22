@@ -1,11 +1,15 @@
 # SQL to use before you start the project
 
 Start with postgresql SQL commands. You can refer to [this](https://www.postgresql.org/docs/9.6/rowtypes.html) for nested type definition.
+Search for [unique](https://www.google.com/search?q=postgresql+how+to+make+data+unique), [contraints](http://www.postgresqltutorial.com/postgresql-user-defined-data-types/) and [primary key and references](http://www.postgresqltutorial.com/postgresql-foreign-key/)
 
 ## 1. Define sql types
 
+Paste the part before DROP part in your postgresql console.
+
 ```sql
 CREATE DATABASE graphql OWNER you;
+\c graphql
 
 CREATE TABLE users(
   id VARCHAR(255) PRIMARY KEY,
@@ -14,24 +18,33 @@ CREATE TABLE users(
   date_of_birth Date NOT NULL
 );
 
+CREATE DOMAIN pct AS 
+  REAL NOT NULL CHECK (value >= 0);
+
+CREATE DOMAIN value_in_cents AS 
+  INTEGER NOT NULL CHECK (value >= 0);
+
 CREATE TYPE discount AS (
-  pct       REAL,
-  value_in_cents       INTEGER
+  pct pct,
+  value_in_cents value_in_cents
 );
 
 CREATE TABLE products(
   id VARCHAR(255) PRIMARY KEY,
-  price_in_cents INTEGER NOT NULL,
-  title VARCHAR(255) NOT NULL,
+  price_in_cents INTEGER NOT NULL CHECK (price_in_cents > 0),
+  title VARCHAR(255) NOT NULL UNIQUE,
   description TEXT NOT NULL,
   discount discount
 );
 
 DROP TABLE IF EXISTS users, products;
-DROP TYPE IF EXISTS dicount;
+DROP TYPE IF EXISTS discount;
+DROP DOMAIN IF EXISTS pct, value_in_cents;
 ```
 
 ## 2. Give some test datas
+
+Paste it in your postgresql console.
 
 ```sql
 INSERT INTO users VALUES
