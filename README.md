@@ -10,6 +10,6 @@ https://github.com/hashlab/hiring/blob/master/challenges/pt-br/back-challenge.md
 
 ## What left
 
-1. Should learn docker to separate the project or make grpc equivalent to graphql
+1. Should make grpc equivalent to grapqhl in other repository
+2. Learn docker and separate the project 
 
-2. Should separate the project and upload 1. express with /products, 2. grapqhl to docker
