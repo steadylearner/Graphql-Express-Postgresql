@@ -1,8 +1,4 @@
-# Protoype the project with graphql
-
-https://github.com/hashlab/hiring/blob/master/challenges/pt-br/back-challenge.md
-
-## READ MORE
+# READ MORE
 
 1. [Node Postgres](https://node-postgres.com)
 
